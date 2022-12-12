@@ -41,7 +41,12 @@ async def update_user(request):
 
 
 async def delete_user(request):
-    pass
+
+    print("Delete user handler")
+    user_id = int(request.match_info['user_id'])
+    users.pop(user_id)
+
+    return web.Response()
 
 
 app.add_routes([web.get('/users', get_users),
