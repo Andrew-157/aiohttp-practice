@@ -1,17 +1,21 @@
 from aiohttp import web
 
 app = web.Application()
-routes = web.RouteTableDef()
+users = {}
 
 
-@routes.get('/')
-async def handler(request):
+async def get_user(request):
 
-    print("Calling handler...")
+    print("Get user handler")
     print(request)
-    return web.Response(text="Hello AIOHTTP!")
+    user_id = request.match_info['user_id']
 
-app.add_routes(routes)
+    return web.Response(text=users[user_id])
+
+app.add_routes([web.get('/users/{user_id}', get_user),
+                web.post('/users', ),
+                web.put('/users', ),
+                web.delete('/users', )])
 
 if __name__ == '__main__':
     web.run_app(app)
