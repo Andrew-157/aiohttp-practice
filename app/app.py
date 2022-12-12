@@ -52,8 +52,8 @@ async def delete_user(request):
 app.add_routes([web.get('/users', get_users),
                 web.post('/users', create_user),
                 web.get('/users/{user_id}', get_user),
-                web.put('/users', update_user),
-                web.delete('/users', delete_user)])
+                web.put('/users/{user_id}', update_user),
+                web.delete('/users/{user_id}', delete_user)])
 
 if __name__ == '__main__':
     web.run_app(app)
