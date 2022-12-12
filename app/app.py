@@ -4,6 +4,13 @@ app = web.Application()
 users = {}
 
 
+async def get_users(request):
+
+    print("Get users handler")
+
+    return web.json_response(users)
+
+
 async def get_user(request):
 
     print("Get user handler")
@@ -37,8 +44,9 @@ async def delete_user(request):
     pass
 
 
-app.add_routes([web.get('/users/{user_id}', get_user),
+app.add_routes([web.get('/users', get_users),
                 web.post('/users', create_user),
+                web.get('/users/{user_id}', get_user),
                 web.put('/users', update_user),
                 web.delete('/users', delete_user)])
 
