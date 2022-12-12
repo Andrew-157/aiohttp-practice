@@ -1,7 +1,24 @@
 from aiohttp import web
 
-app = web.Application()
 users = {}
+
+
+@web.middleware
+async def check_authn(request, handler):
+
+    print("Before Authn")
+    response = await handler(request)
+    print("After Authn")
+    return response
+
+
+@web.middleware
+async def check_authz(request, handler):
+
+    print("Before Authz")
+    response = await handler(request)
+    print("After Authz")
+    return response
 
 
 async def get_users(request):
@@ -56,6 +73,9 @@ async def delete_user(request):
     users.pop(user_id)
 
     return web.Response()
+
+
+app = web.Application(middlewares=[check_authn, check_authz])
 
 
 app.add_routes([web.get('/users', get_users),
