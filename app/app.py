@@ -29,7 +29,12 @@ async def create_user(request):
 
     print("Create user handler")
     user = await request.json()
-    users[user['user_id']] = user
+    user_id = user['user_id']
+
+    if user_id in users:
+        return web.json_response({'error': 'user already exists'}, status=409)
+
+    users[user_id] = user
 
     return web.json_response(user)
 
