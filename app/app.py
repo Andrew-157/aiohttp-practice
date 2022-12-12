@@ -7,6 +7,10 @@ users = {}
 async def get_users(request):
 
     print("Get users handler")
+    if 'nickname' in request.query:
+        for user_id, user in users.items():
+            if request.query['nickname'] == user['nickname']:
+                return web.json_response(user)
 
     return web.json_response(users)
 
